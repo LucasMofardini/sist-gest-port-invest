@@ -13,6 +13,11 @@ public class Investment
     /// Id do Produto Financeiro
     /// </summary>
     public int FinancialProductId { get; set; }
+    
+    /// <summary>
+    /// Id do Cliente
+    /// </summary>
+    public int CustomerId { get; set; }
 
     /// <summary>
     /// Quantidade de papéis comprados
@@ -30,22 +35,12 @@ public class Investment
     public decimal ProductAmountPrice  { get; set; }
     
     /// <summary>
-    /// Status do produto financeiro
+    /// Investimento ativo?
     /// </summary>
-    public FinancialProductStatusEnum Status { get; set; } 
+    public bool IsActive { get; set; } 
     
     /// <summary>
-    /// Tipo da categoria do produto financeiro
-    /// </summary>
-    public InvestmentCategoryEnum CategoryType { get; set; } 
-    
-    /// <summary>
-    /// Id Usuário de criação do produto financeiro
-    /// </summary>
-    public int CreatedBy { get; set; } 
-    
-    /// <summary>
-    /// Data de vencimento do produto financeiro
+    /// Data de vencimento do investimento
     /// </summary>
     public DateTime MaturityDate { get; set; }
 }

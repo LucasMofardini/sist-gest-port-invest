@@ -13,4 +13,5 @@ public class Context : DbContext
     
     public DbSet<FinancialProduct> FinancialProduct { get; set; }
     public DbSet<Customer> Customer { get; set; }
+    public DbSet<Investment> InvestmentPurchase { get; set; }
 }

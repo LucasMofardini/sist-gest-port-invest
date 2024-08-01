@@ -1,7 +1,6 @@
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Customer;
-using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentManagementSystem.API.Controllers;

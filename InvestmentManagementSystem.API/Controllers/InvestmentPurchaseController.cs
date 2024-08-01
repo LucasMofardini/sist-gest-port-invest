@@ -1,12 +1,13 @@
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.DTOs.Investment;
 using InvestmentManagementSystem.Application.Interfaces;
-using InvestmentManagementSystem.Domain.Customer;
 using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentManagementSystem.API.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class InvestmentPurchaseController(IInvestmentPurchaseService investmentPurchaseService) : ControllerBase
 {
     [HttpGet]
@@ -52,9 +53,17 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
 
             return Created();
         }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid(e.Message);
+        }
         catch (KeyNotFoundException e)
         {
             return NotFound(e.Message);
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            return BadRequest(e.Message);
         }
         catch (Exception e)
         {

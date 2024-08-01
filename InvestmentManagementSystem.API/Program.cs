@@ -13,6 +13,7 @@ builder.Services.AddDbContext<Context>(opts =>
 
 builder.Services.AddScoped<IFinancialProductService, FinancialProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IInvestmentPurchaseService, InvestmentPurchaseService>();
 builder.Services.AddScoped<DbContext, Context>();
 
 builder.Services.AddControllers();

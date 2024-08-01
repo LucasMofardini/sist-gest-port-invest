@@ -4,9 +4,9 @@ namespace InvestmentManagementSystem.Domain.Enums;
 
 public enum FinancialProductStatusEnum
 {
-    [Description("Ativo")]
-    Active,
-    
     [Description("Inativo")]
-    Inactive
+    Inactive = 0,
+    
+    [Description("Ativo")]
+    Active = 1
 }
