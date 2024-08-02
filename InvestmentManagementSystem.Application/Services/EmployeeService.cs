@@ -26,9 +26,6 @@ public class EmployeeService(Context context) : IEmployeeService
     {
         var employee = GetEmployeeByEmployeeId(id);
 
-        if (employee is null)
-            throw new KeyNotFoundException($"{id} - Funcionário não encontrado");
-
         employee.Name = dto.Name ?? employee.Email;
         employee.Email = dto.Email ?? employee.Email;
         employee.Role = dto.Role ?? employee.Role;
@@ -38,24 +35,13 @@ public class EmployeeService(Context context) : IEmployeeService
         context.SaveChanges();
     }
 
-    public Employee GetEmployeeById(int id)
-    {
-        var employee = GetEmployeeByEmployeeId(id);
-
-        if (employee is null)
-            throw new KeyNotFoundException($"{id} - Funcionário não encontrado");
-
-        return employee;
-    }
+    public Employee GetEmployeeById(int id) =>
+        GetEmployeeByEmployeeId(id);
 
     public void DeleteEmployeeById(int id)
     {
         //@TODO Quando um funcionario é deletado, o que fazer com os investimentos atrelados a ele? colocar como inativo?
-        
         var employee = GetEmployeeByEmployeeId(id);
-
-        if (employee is null)
-            throw new KeyNotFoundException($"{id} - Funcionário não encontrado");
 
         context.Employee.Remove(employee);
         context.SaveChanges();    }
@@ -63,7 +49,8 @@ public class EmployeeService(Context context) : IEmployeeService
     public List<Employee> GetAllEmployees() =>
         context.Employee.ToList();
     
-    private Employee? GetEmployeeByEmployeeId(int id) =>
+    private Employee GetEmployeeByEmployeeId(int id) =>
         context.Employee.FirstOrDefault(x =>
-            x.EmployeeId == id);
+            x.EmployeeId == id)
+        ?? throw new KeyNotFoundException($"{id} - Funcionário não encontrado");
 }

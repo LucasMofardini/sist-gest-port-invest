@@ -1,4 +1,5 @@
 using InvestmentManagementSystem.Application.DTOs;
+using InvestmentManagementSystem.Application.DTOs.FinancialProduct;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.AspNetCore.Mvc;
@@ -42,13 +43,32 @@ public class FinancialProductController(IFinancialProductService financialProduc
             return BadRequest(e);
         }
     }
-    
-    [HttpPost]
-    public ActionResult Post([FromBody] FinancialProductDTO dto)
+
+    [HttpGet("CategoryId/{id}")]
+    public ActionResult<Investment> GetInvestmentsByFinancialProduct(int id)
     {
         try
         {
-            financialProductService.CreateOrUpdateFinancialProduct(dto);
+            var result = financialProductService.GetAllFinancialProductByCategoryId(id);
+
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+
+    [HttpPost]
+    public ActionResult Post([FromBody] CreateFinancialProductDTO dto)
+    {
+        try
+        {
+            financialProductService.CreateFinancialProduct(dto);
 
             return Created();
         }
@@ -63,11 +83,11 @@ public class FinancialProductController(IFinancialProductService financialProduc
     }
     
     [HttpPut("{id}")]
-    public ActionResult Post([FromBody] FinancialProductDTO dto, int id)
+    public ActionResult Post([FromBody] UpdateFinancialProductDTO dto, int id)
     {
         try
         {
-            financialProductService.CreateOrUpdateFinancialProduct(dto, id);
+            financialProductService.UpdateFinancialProduct(dto, id);
 
             return Ok();
         }

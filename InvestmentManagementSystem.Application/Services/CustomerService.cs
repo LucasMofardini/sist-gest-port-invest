@@ -2,38 +2,14 @@ using System.Runtime.CompilerServices;
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Customer;
+using InvestmentManagementSystem.Domain.Investment;
 using InvestmentManagementSystem.Infrastructure.Data;
 
 namespace InvestmentManagementSystem.Application.Services;
 
-public class CustomerService(Context context) : ICustomerService
+public class CustomerService(
+    Context context) : ICustomerService
 {
-    public Customer GetCustomerByCustomerId(int id)
-    {
-        var customer = GetCustomerById(id);
-
-        if (customer is null)
-            throw new KeyNotFoundException($"{id} - Não encontrado");
-
-        return customer;
-    }
-
-    public void DeleteCustomerById(int id)
-    {
-        var customer = GetCustomerById(id);
-
-        if (customer is null)
-            throw new KeyNotFoundException($"{id} - Não encontrado");
-
-        context.Customer.Remove(customer);
-        context.SaveChanges();
-    }
-
-    public List<Customer> GetAllCustomer()
-    {
-        return context.Customer.ToList();
-    }
-
     public void CreateCustomer(CreateCustomerDTO dto)
     {
         var customer = new Customer()
@@ -55,9 +31,6 @@ public class CustomerService(Context context) : ICustomerService
     {
         var customer = GetCustomerById(id);
 
-        if (customer is null)
-            throw new KeyNotFoundException($"{id} - Cliente não encontrado");
-
         customer.Name = dto.Name ?? customer.Name;
         customer.Balance = dto.Balance ?? customer.Balance;
         customer.Email = dto.Email ?? customer.Email;
@@ -68,10 +41,32 @@ public class CustomerService(Context context) : ICustomerService
 
         context.SaveChanges();
     }
-
-    private Customer? GetCustomerById(int? id)
+    
+    public List<Customer> GetAllCustomer()
+        => context.Customer.ToList();
+    
+    public Customer GetCustomerByCustomerId(int id) =>
+        GetCustomerById(id);
+    
+    public void DeleteCustomerById(int id)
     {
-        return context.Customer.FirstOrDefault(x =>
-            x.CustomerId == id);
+        var customer = GetCustomerById(id);
+
+        var investments = GetAllInvestmentsByCustomerId(customer.CustomerId);
+        
+        // Desativando todos os investimentos do cliente.
+        if(investments.Count != 0)
+            investments.ForEach(investment => investment.IsActive = false);
+
+        context.Customer.Remove(customer);
+        context.SaveChanges();
     }
+
+    private Customer GetCustomerById(int? id) =>
+        context.Customer.FirstOrDefault(x =>
+            x.CustomerId == id)
+        ?? throw new KeyNotFoundException($"{id} - Cliente não encontrado");
+    
+    private List<Investment> GetAllInvestmentsByCustomerId(int id) =>
+        context.InvestmentPurchase.Where(x => x.CustomerId == id).ToList();
 }

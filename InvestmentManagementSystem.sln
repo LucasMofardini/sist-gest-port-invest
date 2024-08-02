@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestmentManagementSystem.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestmentManagementSystem.Infrastructure", "InvestmentManagementSystem.Infrastructure\InvestmentManagementSystem.Infrastructure.csproj", "{79C8F261-FF2E-4D37-8CBF-9F4370B10098}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 - Test", "06 - Test", "{84B1DB45-5E1F-4176-9BE5-A6D99A93F19E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestmentManagementSystem.Test", "InvestmentManagementSystem.Test\InvestmentManagementSystem.Test.csproj", "{4A82AF0C-43FD-4574-915B-28CCB9CA9D04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,11 +42,16 @@ Global
 		{79C8F261-FF2E-4D37-8CBF-9F4370B10098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79C8F261-FF2E-4D37-8CBF-9F4370B10098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79C8F261-FF2E-4D37-8CBF-9F4370B10098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A82AF0C-43FD-4574-915B-28CCB9CA9D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A82AF0C-43FD-4574-915B-28CCB9CA9D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A82AF0C-43FD-4574-915B-28CCB9CA9D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A82AF0C-43FD-4574-915B-28CCB9CA9D04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2C1F10E6-66E8-4EA0-A2C4-313F575BE178} = {3572CC32-68B5-44B1-AD25-25C8B21FC3D8}
 		{4501C7BB-D08B-48C7-B4F5-1000B3FD12D6} = {A19EEE15-17A4-4045-85B6-D75DB0FF7AFC}
 		{ABD0D0B5-A568-42F7-84C2-F20834503EAF} = {133A4465-30A8-4B91-9FF5-0B149E2952F8}
 		{79C8F261-FF2E-4D37-8CBF-9F4370B10098} = {0FDF71A2-AC2D-449A-BD53-7148BC949D7D}
+		{4A82AF0C-43FD-4574-915B-28CCB9CA9D04} = {84B1DB45-5E1F-4176-9BE5-A6D99A93F19E}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
 using InvestmentManagementSystem.Application.DTOs;
+using InvestmentManagementSystem.Application.DTOs.FinancialProduct;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Investment;
 using InvestmentManagementSystem.Infrastructure.Data;
@@ -7,39 +8,7 @@ namespace InvestmentManagementSystem.Application.Services;
 
 public class FinancialProductService(Context context) : IFinancialProductService
 {
-    public void CreateOrUpdateFinancialProduct(FinancialProductDTO dto, int? financialProductId = null)
-    {
-        if (financialProductId is not null)
-        {
-            UpdateFinancialProduct(dto, financialProductId);
-            return;
-        }
-
-        CreateFinancialProduct(dto);
-    }
-
-    public FinancialProduct GetFinancialProductById(int financialProductId)
-    {
-        var product = GetProductById(financialProductId);
-
-        if (product is null)
-            throw new KeyNotFoundException($"{financialProductId} - Produto Financeiro Não encontrado");
-
-        return product;
-    }
-
-    public void DeleteFinancialProductById(int financialProductId)
-    {
-        var product = GetProductById(financialProductId);
-
-        if (product is null)
-            throw new KeyNotFoundException($"{financialProductId} - Produto Financeiro Não encontrado");
-
-        context.FinancialProduct.Remove(product);
-        context.SaveChanges();
-    }
-
-    private void CreateFinancialProduct(FinancialProductDTO dto)
+    public void CreateFinancialProduct(CreateFinancialProductDTO dto)
     {
         var product = new FinancialProduct
         {
@@ -57,32 +26,41 @@ public class FinancialProductService(Context context) : IFinancialProductService
         context.SaveChanges();
     }
 
-    private void UpdateFinancialProduct(FinancialProductDTO dto, int? financialProductId)
+    public void UpdateFinancialProduct(UpdateFinancialProductDTO dto, int id)
     {
-        var financialProduct = GetProductById(financialProductId);
+        var financialProduct = GetProductById(id);
 
-        if (financialProduct is null)
-            throw new KeyNotFoundException($"{financialProductId} - Produto financeiro não encontrado");
-
-        financialProduct.FinancialProductId = financialProductId.GetValueOrDefault();
-        financialProduct.CategoryType = dto.CategoryType;
+        financialProduct.CategoryType = dto.CategoryType ?? financialProduct.CategoryType;
         financialProduct.LastUpdatedDate = DateTime.Now;
-        financialProduct.Quantity = dto.Quantity;
-        financialProduct.UnitPrice = dto.UnitPrice;
-        financialProduct.Description = dto.Description;
-        financialProduct.Name = dto.Name;
+        financialProduct.Quantity = dto.Quantity ?? financialProduct.Quantity;
+        financialProduct.UnitPrice = dto.UnitPrice ?? financialProduct.UnitPrice;
+        financialProduct.Description = dto.Description ?? financialProduct.Description;
+        financialProduct.Name = dto.Name ?? financialProduct.Name;
 
         context.SaveChanges();
     }
-    
+
+    public FinancialProduct GetFinancialProductById(int id) =>
+        GetProductById(id);
+
     public List<FinancialProduct> GetAllFinancialProduct()
+        => context.FinancialProduct.ToList();   
+    public List<FinancialProduct> GetAllFinancialProductByCategoryId (int categoryId)
+        => context.FinancialProduct.Where(x => x.CategoryType == categoryId).ToList();
+
+    public void DeleteFinancialProductById(int id)
     {
-        return context.FinancialProduct.ToList();
+        var product = GetProductById(id);
+
+        // TODO talvez nao devesse excluir e sim passar o FinancialProduct para inativo.
+        // Jutamente com todos os investimentos desse tipo
+
+        context.FinancialProduct.Remove(product);
+        context.SaveChanges();
     }
-    
-    private FinancialProduct? GetProductById(int? financialProductId)
-    {
-        return context.FinancialProduct.FirstOrDefault(x =>
-            x.FinancialProductId == financialProductId);
-    }
+
+    private FinancialProduct GetProductById(int id)
+        => context.FinancialProduct.FirstOrDefault(x =>
+               x.FinancialProductId == id)
+           ?? throw new KeyNotFoundException($"{id} - Produto financeiro não encontrado");
 }

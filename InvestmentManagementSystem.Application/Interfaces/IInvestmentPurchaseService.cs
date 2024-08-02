@@ -11,4 +11,7 @@ public interface IInvestmentPurchaseService
     Investment GetInvestmentPurchaseById(int id);
     void DeleteInvestmentPurchaseById(int id);
     List<Investment> GetAllInvestmentPurchase();
+    List<Investment> GetAllInvestmentByCustomerId(int id);
+    List<Investment> GetAllInvestmentByFinancialProductId(int id);
+    List<Investment> GetExpirationInvestments(int nextDays);
 }

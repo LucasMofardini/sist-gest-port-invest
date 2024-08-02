@@ -1,6 +1,7 @@
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.DTOs.Investment;
 using InvestmentManagementSystem.Application.Interfaces;
+using InvestmentManagementSystem.Domain.Customer;
 using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +45,63 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
         }
     }
     
+    [HttpGet("Customer/{id}")]
+    public ActionResult<Investment> GetInvestmentsByCustomerId(int id)
+    {
+        try
+        {
+            var result = investmentPurchaseService.GetAllInvestmentByCustomerId(id);
+            
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+    
+    [HttpGet("FinancialProduct/{id}")]
+    public ActionResult<Investment> GetInvestmentsByFinancialProduct(int id)
+    {
+        try
+        {
+            var result = investmentPurchaseService.GetAllInvestmentByFinancialProductId(id);
+            
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+    
+    [HttpGet("CloseToExpiration/{nextDays}")]
+    public ActionResult<Investment> GetCloseToExpiration(int nextDays)
+    {
+        try
+        {
+            var result = investmentPurchaseService.GetExpirationInvestments(nextDays);
+            
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+    
     [HttpPost]
     public ActionResult Post([FromBody] CreateInvestmentPurchaseDTO dto)
     {
@@ -71,7 +129,6 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
         }
     }
     
-    //@TODO falta fazer esse
     [HttpPut("{id}")]
     public ActionResult Post([FromBody] UpdateInvestmentPurchaseDTO dto, int id)
     {

@@ -13,30 +13,20 @@ public class InvestmentPurchaseService(
     IFinancialProductService financialProductService,
     IEmployeeService employeeService) : IInvestmentPurchaseService
 {
-    public Investment GetInvestmentPurchaseById(int id)
-    {
-        var investment = GetInvestmentById(id);
-
-        if (investment is null)
-            throw new KeyNotFoundException($"{id} - Não encontrado");
-
-        return investment;    
-    }
-
     public void CreateInvestmentPurchase(CreateInvestmentPurchaseDTO dto)
     {
         var customer = customerService.GetCustomerByCustomerId(dto.CustomerId);
 
         if (!customer.IsActive)
             throw new UnauthorizedAccessException($"Usuário {customer.CustomerId} está inativo");
-        
+
         var employee = employeeService.GetEmployeeById(dto.EmployeeId);
-        
+
         var product = financialProductService.GetFinancialProductById(dto.FinancialProductId);
 
-        if (product.Status != (int) FinancialProductStatusEnum.Active)
+        if (product.Status != (int)FinancialProductStatusEnum.Active)
             throw new UnauthorizedAccessException($"Produto {product.FinancialProductId} está inativo");
-        
+
         if (dto.Quantity > product.Quantity)
             throw new ArgumentOutOfRangeException("Quantidade não permitida");
 
@@ -44,7 +34,7 @@ public class InvestmentPurchaseService(
 
         if (amoutPrice > customer.Balance)
             throw new ArgumentOutOfRangeException("Saldo inválido");
-        
+
         var investment = new Investment()
         {
             CustomerId = customer.CustomerId,
@@ -58,11 +48,11 @@ public class InvestmentPurchaseService(
         };
 
         context.InvestmentPurchase.Add(investment);
-        
+
         product.Quantity -= dto.Quantity;
 
         customer.Balance -= amoutPrice;
-            
+
         context.SaveChanges();
     }
 
@@ -70,37 +60,52 @@ public class InvestmentPurchaseService(
     {
         var investment = GetInvestmentById(id);
 
-        if (investment is null)
-            throw new KeyNotFoundException($"{id} - Cliente não encontrado");
-
         investment.IsActive = dto.IsActive ?? investment.IsActive;
         investment.MaturityDate = dto.MaturityDate ?? investment.MaturityDate;
-        
+
         context.SaveChanges();
     }
+
+    public Investment GetInvestmentPurchaseById(int id) =>
+        GetInvestmentById(id);
+
+    public List<Investment> GetAllInvestmentPurchase() =>
+        context.InvestmentPurchase.ToList();
+
+    public List<Investment> GetAllInvestmentByCustomerId(int id) =>
+        context.InvestmentPurchase.Where(x => x.CustomerId == id)
+            .ToList();
     
+    public List<Investment> GetAllInvestmentByFinancialProductId(int id) =>
+        context.InvestmentPurchase.Where(x => x.FinancialProductId == id)
+            .ToList();
+
     public void DeleteInvestmentPurchaseById(int id)
     {
         var investment = GetInvestmentById(id);
 
         if (investment is null)
-            throw new KeyNotFoundException($"{id} - Não encontrado");
+            throw new KeyNotFoundException($"{id} - Investimento Não encontrado");
 
         context.InvestmentPurchase.Remove(investment);
         context.SaveChanges();
     }
+    
+    public List<Investment> GetExpirationInvestments(int nextDays)
+    {
+        var investments = GetAllInvestmentPurchase();
 
-    public List<Investment> GetAllInvestmentPurchase()
-    {
-        return context.InvestmentPurchase.ToList();
+        var filteredInvestments = 
+            investments.Where(x => x.MaturityDate <= DateTime.Now.AddDays(nextDays)).ToList();
+        
+        return filteredInvestments;
     }
-    
-    private Investment? GetInvestmentById(int? id)
-    {
-        return context.InvestmentPurchase.FirstOrDefault(x =>
-            x.InvestmentId == id);
-    }
-    
+
+    private Investment GetInvestmentById(int? id) =>
+        context.InvestmentPurchase.FirstOrDefault(x =>
+            x.InvestmentId == id)
+        ?? throw new KeyNotFoundException($"{id} - Investimento não encontrado");
+
     private static DateTime GenerateRandomDate(DateTime startDate, DateTime endDate)
     {
         Random random = new Random();
