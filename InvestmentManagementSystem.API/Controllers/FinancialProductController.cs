@@ -45,7 +45,7 @@ public class FinancialProductController(IFinancialProductService financialProduc
     }
 
     [HttpGet("CategoryId/{id}")]
-    public ActionResult<Investment> GetInvestmentsByFinancialProduct(int id)
+    public ActionResult<List<FinancialProduct>> GetInvestmentsByFinancialProduct(int id)
     {
         try
         {

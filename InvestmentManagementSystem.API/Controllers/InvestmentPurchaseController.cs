@@ -46,7 +46,7 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     }
     
     [HttpGet("Customer/{id}")]
-    public ActionResult<Investment> GetInvestmentsByCustomerId(int id)
+    public ActionResult<List<Investment>> GetInvestmentsByCustomerId(int id)
     {
         try
         {
@@ -65,7 +65,7 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     }
     
     [HttpGet("FinancialProduct/{id}")]
-    public ActionResult<Investment> GetInvestmentsByFinancialProduct(int id)
+    public ActionResult<List<Investment>> GetInvestmentsByFinancialProduct(int id)
     {
         try
         {
@@ -84,7 +84,7 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     }
     
     [HttpGet("CloseToExpiration/{nextDays}")]
-    public ActionResult<Investment> GetCloseToExpiration(int nextDays)
+    public ActionResult<List<Investment>> GetCloseToExpiration(int nextDays)
     {
         try
         {
