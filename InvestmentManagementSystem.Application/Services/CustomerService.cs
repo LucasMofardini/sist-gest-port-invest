@@ -58,13 +58,13 @@ public class CustomerService(Context context) : ICustomerService
         if (customer is null)
             throw new KeyNotFoundException($"{id} - Cliente não encontrado");
 
-        customer.Name = dto.Name;
-        customer.Balance = dto.Balance;
-        customer.Email = dto.Email;
-        customer.IdentificationNumber = dto.IdentificationNumber;
+        customer.Name = dto.Name ?? customer.Name;
+        customer.Balance = dto.Balance ?? customer.Balance;
+        customer.Email = dto.Email ?? customer.Email;
+        customer.IdentificationNumber = dto.IdentificationNumber ?? customer.IdentificationNumber;
         customer.IsActive = dto.IsActive;
-        customer.PhoneNumber = dto.PhoneNumber;
-        customer.PostalCode = dto.PostalCode;
+        customer.PhoneNumber = dto.PhoneNumber ?? customer.PhoneNumber;
+        customer.PostalCode = dto.PostalCode ?? customer.PostalCode;
 
         context.SaveChanges();
     }

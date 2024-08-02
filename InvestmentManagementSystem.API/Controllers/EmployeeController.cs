@@ -1,21 +1,21 @@
-using InvestmentManagementSystem.Application.DTOs;
-using InvestmentManagementSystem.Application.DTOs.Investment;
+using InvestmentManagementSystem.Application.DTOs.Employee;
 using InvestmentManagementSystem.Application.Interfaces;
-using InvestmentManagementSystem.Domain.Investment;
+using InvestmentManagementSystem.Domain.Employee;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentManagementSystem.API.Controllers;
 
+
 [ApiController]
 [Route("api/[controller]")]
-public class InvestmentPurchaseController(IInvestmentPurchaseService investmentPurchaseService) : ControllerBase
+public class EmployeeController(IEmployeeService employeeService) : ControllerBase
 {
     [HttpGet]
-    public ActionResult<List<Investment>> Get()
+    public ActionResult<List<Employee>> Get()
     {
         try
         {
-            var result = investmentPurchaseService.GetAllInvestmentPurchase();
+            var result = employeeService.GetAllEmployees();
 
             return Ok(result);
         }
@@ -26,11 +26,11 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     }
     
     [HttpGet("{id}")]
-    public ActionResult<Investment> Get(int id)
+    public ActionResult<Employee> Get(int id)
     {
         try
         {
-            var result = investmentPurchaseService.GetInvestmentPurchaseById(id);
+            var result = employeeService.GetEmployeeById(id);
             
             return Ok(result);
         }
@@ -45,25 +45,17 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     }
     
     [HttpPost]
-    public ActionResult Post([FromBody] CreateInvestmentPurchaseDTO dto)
+    public ActionResult Post([FromBody] CreateEmployeeDTO dto)
     {
         try
         {
-            investmentPurchaseService.CreateInvestmentPurchase(dto);
+            employeeService.CreateEmployee(dto);
 
             return Created();
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            return Forbid(e.Message);
         }
         catch (KeyNotFoundException e)
         {
             return NotFound(e.Message);
-        }
-        catch (ArgumentOutOfRangeException e)
-        {
-            return BadRequest(e.Message);
         }
         catch (Exception e)
         {
@@ -71,13 +63,12 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
         }
     }
     
-    //@TODO falta fazer esse
     [HttpPut("{id}")]
-    public ActionResult Post([FromBody] UpdateInvestmentPurchaseDTO dto, int id)
+    public ActionResult Post([FromBody] UpdateEmployeeDTO dto, int id)
     {
         try
         {
-            investmentPurchaseService.UpdateInvestmentPurchase(dto, id);
+            employeeService.UpdateEmployee(dto, id);
 
             return Ok();
         }
@@ -96,7 +87,7 @@ public class InvestmentPurchaseController(IInvestmentPurchaseService investmentP
     {
         try
         {
-            investmentPurchaseService.DeleteInvestmentPurchaseById(id);
+            employeeService.DeleteEmployeeById(id);
 
             return NoContent();
         }

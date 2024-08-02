@@ -10,7 +10,8 @@ namespace InvestmentManagementSystem.Application.Services;
 public class InvestmentPurchaseService(
     Context context,
     ICustomerService customerService,
-    IFinancialProductService financialProductService) : IInvestmentPurchaseService
+    IFinancialProductService financialProductService,
+    IEmployeeService employeeService) : IInvestmentPurchaseService
 {
     public Investment GetInvestmentPurchaseById(int id)
     {
@@ -28,7 +29,9 @@ public class InvestmentPurchaseService(
 
         if (!customer.IsActive)
             throw new UnauthorizedAccessException($"Usuário {customer.CustomerId} está inativo");
-
+        
+        var employee = employeeService.GetEmployeeById(dto.EmployeeId);
+        
         var product = financialProductService.GetFinancialProductById(dto.FinancialProductId);
 
         if (product.Status != (int) FinancialProductStatusEnum.Active)
@@ -46,6 +49,7 @@ public class InvestmentPurchaseService(
         {
             CustomerId = customer.CustomerId,
             FinancialProductId = product.FinancialProductId,
+            EmployeeId = employee.EmployeeId,
             Quantity = dto.Quantity,
             ProductUnitPrice = product.UnitPrice,
             IsActive = true,
@@ -68,8 +72,9 @@ public class InvestmentPurchaseService(
 
         if (investment is null)
             throw new KeyNotFoundException($"{id} - Cliente não encontrado");
-        
-        
+
+        investment.IsActive = dto.IsActive ?? investment.IsActive;
+        investment.MaturityDate = dto.MaturityDate ?? investment.MaturityDate;
         
         context.SaveChanges();
     }

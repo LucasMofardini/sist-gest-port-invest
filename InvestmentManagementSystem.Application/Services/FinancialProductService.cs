@@ -23,7 +23,7 @@ public class FinancialProductService(Context context) : IFinancialProductService
         var product = GetProductById(financialProductId);
 
         if (product is null)
-            throw new KeyNotFoundException($"{financialProductId} - Não encontrado");
+            throw new KeyNotFoundException($"{financialProductId} - Produto Financeiro Não encontrado");
 
         return product;
     }
@@ -33,7 +33,7 @@ public class FinancialProductService(Context context) : IFinancialProductService
         var product = GetProductById(financialProductId);
 
         if (product is null)
-            throw new KeyNotFoundException($"{financialProductId} - Não encontrado");
+            throw new KeyNotFoundException($"{financialProductId} - Produto Financeiro Não encontrado");
 
         context.FinancialProduct.Remove(product);
         context.SaveChanges();

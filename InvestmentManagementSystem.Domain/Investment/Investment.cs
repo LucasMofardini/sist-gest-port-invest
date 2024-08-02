@@ -43,4 +43,9 @@ public class Investment
     /// Data de vencimento do investimento
     /// </summary>
     public DateTime MaturityDate { get; set; }
+
+    /// <summary>
+    /// Id do Funcionario criador
+    /// </summary>
+    public int EmployeeId { get; set; }
 }
