@@ -10,8 +10,4 @@
       <PackageReference Include="xunit" Version="2.9.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\InvestmentManagementSystem.Application\InvestmentManagementSystem.Application.csproj" />
-    </ItemGroup>
-
 </Project>

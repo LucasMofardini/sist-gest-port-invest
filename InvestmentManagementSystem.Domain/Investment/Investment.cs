@@ -1,5 +1,3 @@
-using InvestmentManagementSystem.Domain.Enums;
-
 namespace InvestmentManagementSystem.Domain.Investment;
 
 public class Investment
@@ -45,7 +43,7 @@ public class Investment
     public DateTime MaturityDate { get; set; }
 
     /// <summary>
-    /// Id do Funcionario criador
+    /// Id do Funcionario atrelado a esse investimento, o ideal seria colocar nas taxas
     /// </summary>
     public int EmployeeId { get; set; }
 }
