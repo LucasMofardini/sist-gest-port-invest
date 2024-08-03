@@ -1,7 +1,7 @@
 # Gestão de Portfólio de Investimentos
 
 Este projeto é uma aplicação de gestão de portfólio de investimentos desenvolvida usando .NET e C#. A arquitetura é baseada em microsserviços, e a aplicação segue o Domain-Driven Design (DDD) para a modelagem do domínio.
-O armazenamento de dados é feito utilizando SQL.
+O armazenamento de dados é feito utilizando MYSQL.
 
 ## Funcionalidades
 
