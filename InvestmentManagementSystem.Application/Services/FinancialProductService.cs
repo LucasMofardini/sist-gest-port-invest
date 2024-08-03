@@ -1,8 +1,10 @@
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.DTOs.FinancialProduct;
 using InvestmentManagementSystem.Application.Interfaces;
+using InvestmentManagementSystem.Domain.FinancialProduct;
 using InvestmentManagementSystem.Domain.Investment;
 using InvestmentManagementSystem.Infrastructure.Data;
+using InvestmentManagementSystem.Utils.Utilities;
 
 namespace InvestmentManagementSystem.Application.Services;
 
@@ -34,8 +36,8 @@ public class FinancialProductService(Context context) : IFinancialProductService
         financialProduct.LastUpdatedDate = DateTime.Now;
         financialProduct.Quantity = dto.Quantity ?? financialProduct.Quantity;
         financialProduct.UnitPrice = dto.UnitPrice ?? financialProduct.UnitPrice;
-        financialProduct.Description = dto.Description ?? financialProduct.Description;
-        financialProduct.Name = dto.Name ?? financialProduct.Name;
+        financialProduct.Description = StringUtils.CompareStr(dto.Description, financialProduct.Description);
+        financialProduct.Name = StringUtils.CompareStr(dto.Name,financialProduct.Name);
 
         context.SaveChanges();
     }

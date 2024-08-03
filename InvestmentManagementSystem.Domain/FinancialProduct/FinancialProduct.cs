@@ -1,6 +1,4 @@
-using InvestmentManagementSystem.Domain.Enums;
-
-namespace InvestmentManagementSystem.Domain.Investment;
+namespace InvestmentManagementSystem.Domain.FinancialProduct;
 
 public class FinancialProduct
 {   

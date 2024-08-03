@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace InvestmentManagementSystem.Application.DTOs;
+namespace InvestmentManagementSystem.Application.DTOs.Investment;
 
 public class CreateInvestmentPurchaseDTO
 {

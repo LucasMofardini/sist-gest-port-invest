@@ -4,6 +4,7 @@ using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Enums;
 using InvestmentManagementSystem.Domain.Investment;
 using InvestmentManagementSystem.Infrastructure.Data;
+using InvestmentManagementSystem.Utils.Utilities;
 
 namespace InvestmentManagementSystem.Application.Services;
 
@@ -43,14 +44,13 @@ public class InvestmentPurchaseService(
             Quantity = dto.Quantity,
             ProductUnitPrice = product.UnitPrice,
             IsActive = true,
-            MaturityDate = GenerateRandomDate(DateTime.Now, DateTime.Now.AddDays(365)),
+            MaturityDate = DateUtils.GenerateRandomDate(DateTime.Now, DateTime.Now.AddDays(365)),
             ProductAmountPrice = amoutPrice
         };
 
         context.InvestmentPurchase.Add(investment);
 
         product.Quantity -= dto.Quantity;
-
         customer.Balance -= amoutPrice;
 
         context.SaveChanges();
@@ -105,11 +105,5 @@ public class InvestmentPurchaseService(
         context.InvestmentPurchase.FirstOrDefault(x =>
             x.InvestmentId == id)
         ?? throw new KeyNotFoundException($"{id} - Investimento não encontrado");
-
-    private static DateTime GenerateRandomDate(DateTime startDate, DateTime endDate)
-    {
-        Random random = new Random();
-        int range = (endDate - startDate).Days;
-        return startDate.AddDays(random.Next(range));
-    }
+    
 }

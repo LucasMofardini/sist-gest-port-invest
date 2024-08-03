@@ -1,6 +1,7 @@
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.DTOs.FinancialProduct;
 using InvestmentManagementSystem.Application.Interfaces;
+using InvestmentManagementSystem.Domain.FinancialProduct;
 using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.AspNetCore.Mvc;
 

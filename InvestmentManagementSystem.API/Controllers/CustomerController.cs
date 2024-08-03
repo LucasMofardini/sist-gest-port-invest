@@ -1,4 +1,5 @@
 using InvestmentManagementSystem.Application.DTOs;
+using InvestmentManagementSystem.Application.DTOs.Customer;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Customer;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +59,8 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
         }
         catch (Exception e)
         {
-            return BadRequest(e);
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
         }
     }
     

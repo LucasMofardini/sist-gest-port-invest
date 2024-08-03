@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using InvestmentManagementSystem.Application.DTOs;
 using InvestmentManagementSystem.Application.DTOs.FinancialProduct;
+using InvestmentManagementSystem.Domain.FinancialProduct;
 using InvestmentManagementSystem.Domain.Investment;
 
 namespace InvestmentManagementSystem.Application.Interfaces;

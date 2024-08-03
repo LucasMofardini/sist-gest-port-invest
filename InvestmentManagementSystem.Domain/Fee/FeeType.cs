@@ -1,4 +1,4 @@
-namespace InvestmentManagementSystem.Domain.Investment;
+namespace InvestmentManagementSystem.Domain.Fee;
 
 public enum FeeType
 {

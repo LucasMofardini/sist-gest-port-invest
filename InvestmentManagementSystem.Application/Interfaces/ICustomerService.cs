@@ -1,4 +1,5 @@
 using InvestmentManagementSystem.Application.DTOs;
+using InvestmentManagementSystem.Application.DTOs.Customer;
 using InvestmentManagementSystem.Domain.Customer;
 using InvestmentManagementSystem.Domain.Investment;
 

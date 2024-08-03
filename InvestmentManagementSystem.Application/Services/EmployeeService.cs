@@ -2,6 +2,7 @@ using InvestmentManagementSystem.Application.DTOs.Employee;
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Domain.Employee;
 using InvestmentManagementSystem.Infrastructure.Data;
+using InvestmentManagementSystem.Utils.Utilities;
 
 namespace InvestmentManagementSystem.Application.Services;
 
@@ -26,8 +27,8 @@ public class EmployeeService(Context context) : IEmployeeService
     {
         var employee = GetEmployeeByEmployeeId(id);
 
-        employee.Name = dto.Name ?? employee.Email;
-        employee.Email = dto.Email ?? employee.Email;
+        employee.Name = StringUtils.CompareStr(dto.Name, employee.Email);
+        employee.Email = StringUtils.CompareStr(dto.Email , employee.Email);
         employee.Role = dto.Role ?? employee.Role;
         employee.AdmissionDate = dto.AdmissionDate ?? employee.AdmissionDate;
         employee.Sallary = dto.Sallary ?? employee.Sallary;

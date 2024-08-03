@@ -1,5 +1,6 @@
 using InvestmentManagementSystem.Application.Interfaces;
 using InvestmentManagementSystem.Application.Services;
+using InvestmentManagementSystem.Application.Validations;
 using InvestmentManagementSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,17 +1,22 @@
-using System.Runtime.CompilerServices;
-using InvestmentManagementSystem.Application.DTOs;
+using InvestmentManagementSystem.Application.DTOs.Customer;
 using InvestmentManagementSystem.Application.Interfaces;
+using InvestmentManagementSystem.Application.Validations;
 using InvestmentManagementSystem.Domain.Customer;
 using InvestmentManagementSystem.Domain.Investment;
 using InvestmentManagementSystem.Infrastructure.Data;
+using InvestmentManagementSystem.Utils.Utilities;
 
 namespace InvestmentManagementSystem.Application.Services;
 
-public class CustomerService(
-    Context context) : ICustomerService
+public class CustomerService(Context context) : ICustomerService
 {
     public void CreateCustomer(CreateCustomerDTO dto)
     {
+        var validation = new CreateCustomerDTOValidator().Validate(dto);
+
+        if (!validation.IsValid)
+            throw new Exception(string.Join(", ", validation.Errors));
+                
         var customer = new Customer()
         {
             Name = dto.Name,
@@ -31,13 +36,13 @@ public class CustomerService(
     {
         var customer = GetCustomerById(id);
 
-        customer.Name = dto.Name ?? customer.Name;
+        customer.Name = StringUtils.CompareStr(dto.Name,customer.Name);
         customer.Balance = dto.Balance ?? customer.Balance;
-        customer.Email = dto.Email ?? customer.Email;
-        customer.IdentificationNumber = dto.IdentificationNumber ?? customer.IdentificationNumber;
+        customer.Email = StringUtils.CompareStr(dto.Email, customer.Email);
+        customer.IdentificationNumber = StringUtils.CompareStr(dto.IdentificationNumber, customer.IdentificationNumber);
+        customer.PhoneNumber = StringUtils.CompareStr(dto.PhoneNumber, customer.PhoneNumber);
+        customer.PostalCode = StringUtils.CompareStr(dto.PostalCode, customer.PostalCode);
         customer.IsActive = dto.IsActive;
-        customer.PhoneNumber = dto.PhoneNumber ?? customer.PhoneNumber;
-        customer.PostalCode = dto.PostalCode ?? customer.PostalCode;
 
         context.SaveChanges();
     }

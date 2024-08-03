@@ -1,5 +1,6 @@
 using InvestmentManagementSystem.Domain.Customer;
 using InvestmentManagementSystem.Domain.Employee;
+using InvestmentManagementSystem.Domain.FinancialProduct;
 using InvestmentManagementSystem.Domain.Investment;
 using Microsoft.EntityFrameworkCore;
 
