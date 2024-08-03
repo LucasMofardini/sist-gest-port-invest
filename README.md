@@ -25,12 +25,7 @@ A arquitetura do projeto é composta pelas seguintes funcionalidades:
 2. 
 ## Configuração
 
-1. **Clone o Repositório**
-
-   ```bash
-   git clone https://github.com/seu-usuario/gestao-portifolio-investimentos.git
-   cd gestao-portifolio-investimentos
-
+1. Clone o Repositório
 3. Abrir o MYSQL e rodar o Script -> docs/script_create.sql
 4. Configurar o InvestmentManagementSystem.API para IIS Express e startar o projeto
 5. Collection do Postam docs/InvestmentManagementSystem.API.postman_collection
