@@ -22,7 +22,7 @@ A arquitetura do projeto é composta pelas seguintes funcionalidades:
 
 ## Pré Requisito
 1. Instalar MYSQL Workbench
-2. 
+2. Visual Studio ou Rider
 ## Configuração
 
 1. Clone o Repositório
