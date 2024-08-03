@@ -20,6 +20,9 @@ A arquitetura do projeto é composta pelas seguintes funcionalidades:
 - **MySQL**: Banco de dados relacional para armazenamento de dados.
 - **Swagger**: Para documentação da API e testes.
 
+## Pré Requisito
+1. Instalar MYSQL Workbench
+2. 
 ## Configuração
 
 1. **Clone o Repositório**
@@ -28,6 +31,6 @@ A arquitetura do projeto é composta pelas seguintes funcionalidades:
    git clone https://github.com/seu-usuario/gestao-portifolio-investimentos.git
    cd gestao-portifolio-investimentos
 
-2. Instalar MYSQL Workbench
-3. Rodar o Script -> script_create.sql
+3. Abrir o MYSQL e rodar o Script -> docs/script_create.sql
 4. Configurar o InvestmentManagementSystem.API para IIS Express e startar o projeto
+5. Collection do Postam docs/InvestmentManagementSystem.API.postman_collection
